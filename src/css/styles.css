@@ -1,0 +1,12 @@
+#drawing{
+  width:  500px;
+  height: 500px;
+  border: 2px solid green;
+  position:relative;
+}
+#drawing svg{
+  position:absolute;
+  top:0px;
+  left:0px;
+  overflow: visible;
+}
