@@ -14,11 +14,23 @@
 </head>
 
 <body onload="AM.Load();">
-  <button type="button" onclick="hooks.addPoint();">Add Point</button>
-  <button type="button" onclick="hooks.createStrip();">Create Strip</button>
-  <button type="button" onclick="hooks.unfold();">Fold/Unfold</button> 
-  <div id="drawing">
+    <div>
+        <h3>How to use:</h3>
+        <ul>
+            <li>You can drag the endpoints of segments around by clicking on the circles.</li>
+            <li>Add as many points as you want.</li>
+            <li>Once you are done click the Create Strip button to see what the drawing would look like.</li>
+            <li>The fold/unfold button animates the paper strip.</li>
+            <li>Click reset if you want to start over.</li>
+        </ul>
+    </div>
+    <button type="button" onclick="hooks.addPoint();">Add Point</button>
+    <button type="button" onclick="hooks.createStrip();">Create Strip</button>
+    <button type="button" onclick="hooks.unfold();">Fold/Unfold</button>
+    <button type="button" onclick="hooks.reset();">Reset</button>
+    <button type="button" onclick="hooks.AMLogo();">AM Logo</button>
+    <div id="drawing">
 
-  </div>
+    </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-AM.PaperLetter = function (svgArg, pointsArg, position, widthArg, foreColorArg, backColorArg, scale) {
+AM.PaperLetter = function (svgArg, pointsArg, position, widthArg, foreColorArg, backColorArg, scale, autoUnfoldDelay) {
     var $scale = scale || 1;
     var $svg = svgArg;
     var $width = widthArg*$scale;
@@ -66,21 +66,11 @@ AM.PaperLetter = function (svgArg, pointsArg, position, widthArg, foreColorArg, 
         fPointA: null,
         fPointB: null,
 
-        dragMove: function () {
-            this.calcFold();
-            if (this.prev) {
-                this.prev.calcFold();
-            }
-            if (this.next) {
-                this.next.calcFold();
-            }
-        },
         calcFold: function () {
             if (!this.prev && !this.next) {
                 return;
             }
             var angle;
-            var dot;
             var dir;
             if (this.prev) {
                 dir = this.prev.point.subtract(this.point).norm();
@@ -91,7 +81,6 @@ AM.PaperLetter = function (svgArg, pointsArg, position, widthArg, foreColorArg, 
             if (this.next && this.prev) {
                 var otherDir = this.next.point.subtract(this.point).norm();
                 angle = (Math.PI - dir.angle(otherDir)) / 2;
-                dot = dir.dot(otherDir);
                 cross = dir.cross(otherDir);
                 if (cross > 0) {
                     angle = -angle;
@@ -390,6 +379,23 @@ AM.PaperLetter = function (svgArg, pointsArg, position, widthArg, foreColorArg, 
     initPoints();
     createStrip();
     makeBundle();
+
+    if(autoUnfoldDelay){
+        this.interval = setInterval(function(){
+            this.FoldUnfold();
+        }.bind(this),autoUnfoldDelay);
+
+        $('#'+$svg.id()).on('click',function(){
+            if(this.interval) {
+                clearInterval(this.interval);
+                this.interval=null;
+            }else{
+                this.interval = setInterval(function(){
+                    this.FoldUnfold();
+                }.bind(this),autoUnfoldDelay);
+            }
+        }.bind(this));
+    }
 
     //endregion 'constructor'
 };
